@@ -1,0 +1,100 @@
+<html>
+<head>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<title>HTML Solution Report</title>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+  $("#solution").click(function(){
+					
+    $.getJSON('solution.json', function(result){
+  
+			$("div").empty();
+			$("div").append("Optional Solution = " + result.run.Optimal + "<br>");
+			var sol = result.run.Solution;
+	
+			var solPattTable = '';
+			solPattTable += '<table id="solPattTable" cellspacing=0 cellpadding=2 border=1>';
+			solPattTable += "<tr><th>Sr. No.</th>";
+			solPattTable += "<th>Cut Pattern</th>";
+			solPattTable += "<th>Quantity</th></tr>";
+
+			for(var i in sol) {
+				var decvar = sol[i]; 
+				var pattern = decvar.pattern;
+				var cnt = decvar.count;
+
+				solPattTable += "<tr>";	
+				solPattTable += "<td>" + i + "</td>";	
+				solPattTable += "<td>";	
+				for(var j in pattern) {
+					solPattTable += pattern[j] + " | ";
+				}
+				solPattTable += "</td>";	
+
+				solPattTable += "<td>";	
+				solPattTable += cnt;
+				solPattTable += "</td>";	
+
+				solPattTable += "</tr>";	
+			}
+
+			solPattTable += "</table>" ;
+			$("div").append(solPattTable);
+
+			var solWidth = result.run.SolutionWidth;
+			var solOWTable = '';
+			solOWTable += '<table id="solOWTable" cellspacing=0 cellpadding=2 border=1>';
+			solOWTable += "<tr><th>Width</th>";
+			solOWTable += "<th>Demand</th>";
+			solOWTable += "<th>Solution</th></tr>";
+
+			for(var i in solWidth) {
+				var decvar = solWidth[i]; 
+				var width = decvar.width;
+				var demand = decvar.demand;
+				var solution = decvar.solution;
+
+				solOWTable += "<td>";	
+				solOWTable += width;
+				solOWTable += "</td>";	
+				solOWTable += "<td>";	
+				solOWTable += demand;
+				solOWTable += "</td>";	
+				solOWTable += "<td>";	
+				solOWTable += solution;
+				solOWTable += "</td>";	
+				solOWTable += "</tr>";	
+			}
+
+			solOWTable += "</table>" ;
+			$("div").append(solOWTable);
+
+    });
+  });
+});
+</script>
+
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+  body {
+    font-family: sans-serif;
+  }
+  p {
+    margin: 0px;
+  }
+</style>
+
+</head>
+
+<body>
+	Make sure that file 'solution.json' is in the same directory as index.html. <br>
+  <button id="solution">Solution</button>
+  <div></div>
+</body>
+
+</html>
+
