@@ -9,7 +9,10 @@
 	<script type="text/javascript">
 
 $(document).ready(function(){
+	// Lê o arquivo JSON criado pela biblioteca cspsol
     $.getJSON('../backend/solution.json', function(result){
+		
+		// Informa a quantidade de barras que serão utilizadas
 		if (result.run.Optimal > 1){
 			$("#Resultado").append("<p style='font-size: 20px; margin-top: 20px; margin-botton: 0'>Serão gastas " + result.run.Optimal + " unidades do material!</p>");
 		}
@@ -17,9 +20,11 @@ $(document).ready(function(){
 			$("#Resultado").append("<p style='font-size: 20px; margin-top: 20px; margin-botton: 0'>Será gasta " + result.run.Optimal + " unidade do material!</p>");
 		}
 
+		// Armazena os padrões de corte gerados (obtidos no JSON)
 		var solucao = result.run.Solution;
 		$("#Resultado").append("<tr/>")
 
+		// Informa quantos padrões de corte foram gerados
 		if (solucao.length > 1){
 			$("#Resultado").append("<p style='font-size: 15px;'>Foram gerados " + solucao.length + " padrões de corte:</p>");
 		}
@@ -27,6 +32,7 @@ $(document).ready(function(){
 			$("#Resultado").append("<p style='font-size: 15px;'>Foi gerado " + solucao.length + " padrão de corte:</p>");
 		}
 		
+		// Cria uma tabela com os cortes
 		var tabelaCortes = '';
 		tabelaCortes += '<table id="tabelaCortes" cellspacing=0 cellpadding=2 border=0 class="table table-striped table-bordered">';
 		tabelaCortes += "<tr><th style='width: 50px;'>#</th>";
@@ -34,12 +40,15 @@ $(document).ready(function(){
 		tabelaCortes += "<th style='width: 190px;'>Número de utilizações</th>";
 		tabelaCortes += "<th style='width: 150px;'>Desperdício</th></tr>";
 
+		// Lê o tamanho da barra para cálculo do desperdício
 		jQuery.get('../backend/dadosCliente.txt', function(data) {
    			var linhas = data.split("\n");	
 			tamanhoBarra = linhas[0];
-
+			
+			// Instancia variável de desperdício total
 			desperdicioTotal = 0;
 
+			// Para cada padrão de corte...
 			for(var i in solucao) {
 				var padQuant = solucao[i]; 
 				var padrao = padQuant.pattern;
@@ -51,11 +60,14 @@ $(document).ready(function(){
 
 				var tamanhoTotalCorte = 0;
 
+				// Imprime o padrão de corte na tabela, com os tamanho do corte de cada padrão
 				tabelaCortes += "| ";
 				for(var j in padrao) {
 					tabelaCortes += padrao[j] + " cm | ";
 					tamanhoTotalCorte += parseInt(padrao[j])
 				}
+
+				// Calcula o desperdício do padrão de corte
 				desperdicioCorte = tamanhoBarra - tamanhoTotalCorte;
 				desperdicioTotal += parseInt(desperdicioCorte) * quantidade;
 
@@ -75,6 +87,7 @@ $(document).ready(function(){
 
 			$("#Resultado").append("<p style='font-size: 15px;'>Atenção: A fim de minimizar a quantidade de padrões de corte utilizados, cortes a mais podem ter sido gerados.<br/>Confira na tabela abaixo a relação de cortes solicitados, e cortes gerados: </p>");
 
+			// Armazenas dados da solução (solicitado vs gerado) de cada corte (obtidos no JSON)
 			var tamanhoSolucao = result.run.SolutionWidth;
 			var cortesGerados = '';
 			cortesGerados += '<table id="cortesGerados" cellspacing=0 cellpadding=2 style="max-width: 550px" class="table table-striped table-bordered">';
@@ -83,12 +96,14 @@ $(document).ready(function(){
 			cortesGerados += "<th style='width: 100px;'>Gerado</th>";
 			cortesGerados += "<th style='width: 150px;'>Despercício</th></tr>";
 
+			// Para cada corte...
 			for(var i in tamanhoSolucao) {
 				var decvar = tamanhoSolucao[i]; 
 				var tamanhoCorte = decvar.width;
 				var demanda = decvar.demand;
 				var gerado = decvar.solution;
 
+				// Calcula o desperdício gerado por cortes em excesso
 				desperdicioExcesso = (parseInt(gerado) * parseInt(tamanhoCorte)) - (parseInt(demanda) * parseInt(tamanhoCorte))
 				desperdicioTotal += parseInt(desperdicioExcesso)
 
@@ -110,6 +125,7 @@ $(document).ready(function(){
 			cortesGerados += "</table>" ;
 			$("#Resultado").append(cortesGerados);
 
+			// Informa o total desperdiçado considerando padrões de corte e excessos
 			$("#Resultado").append("<p style='font-size: 18px; margin-bottom: 20px'>Foram desperdiçados " + desperdicioTotal + " cm de material.</p>");
 		});
     });

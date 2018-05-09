@@ -17,6 +17,7 @@
             </div>
         </div>
         <div class="container">
+            <!--Action chama o arquivo calculaOtimo.php enviando os dados dos inputs quando é feito o submit-->
             <form id="formCorte" action="../backend/calculaOtimo.php" method="post">
                 <div class="form-group">
                     <div class="col-md-6">
@@ -34,16 +35,22 @@
                         </div>
                     </div>
                 </div>
+                    <!--Armazena contador para cada input criado dinamicamente-->
                     <input id="contador" name="contador" value="0" hidden></input>
             </form>
             <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                <!--Adiciona uma nova linha de dados de corte-->
                 <button type="button" class="btn btn-info" style="margin-left: 15px" onclick="adicionarLinha()">+ Novo corte</button>
                 <br/>
+                <!--chma funçâo de submit no formulário-->
                 <button type="button" class="btn btn-success" style="margin-top: 30px" onclick="salvarValores()">Calcular ótimo</button>
             </div>
         </div>
     
         <script>
+        // - Valida se todos os campos obrigatórios foram preenchidos
+        // - Valida os dados preenchidos pelo usuário (tamanho ou quantidade faltando)
+        // - Dá o submit no formulário
         function salvarValores(){
             if (document.getElementById("tamanhoBarra").value == "" || document.getElementById("tamanhoCorte0").value == "" || document.getElementById("quantidadeCorte0").value == ""){
                 alert("Preencha os campos obrigatórios")
@@ -55,6 +62,7 @@
             }
         }
 
+        // Valida se o tamanho de um corte é maior que a barra ou menor ou igual a 0
         function validaTamanho(elemento){
             if(parseInt(elemento.value) > parseInt(document.getElementById("tamanhoBarra").value)){
                 alert("O tamanho do corte não pode ser maior que o material");
@@ -68,6 +76,7 @@
             }
         }
 
+        // Valida se a quantidade é menor ou igual a 0
         function validaQuantidade(elemento){
             if(parseInt(elemento.value) <= 0){
                 alert("A quantidade não pode ser menor ou igual a 0");
@@ -75,6 +84,7 @@
             }
         }
 
+        // Valida se a barra é menor do que algum dos cortes já inseridos ou se é menor ou igual a 0
         function validaTamanhoBarra(elemento){
             for(var i = 0; i <= document.getElementById("contador").value; i++){
                 if(parseInt(elemento.value) < parseInt(document.getElementById("tamanhoCorte".concat(i)).value)){
@@ -89,6 +99,7 @@
             }
         }
 
+        // Valida se para cada corte, ambos os dados foram preenchidos
         function validaPreenchmento(){
             for(var i = 0; i <= document.getElementById("contador").value; i++){
                 if(document.getElementById("quantidadeCorte".concat(i)).value == "" && document.getElementById("tamanhoCorte".concat(i)).value != ""){
@@ -104,15 +115,18 @@
             return true
         }
         
+        // Adiciona uma nova linha para dados do corte
         function adicionarLinha(){
             var i = parseInt(document.getElementById("contador").value)
             var i = i + 1
             document.getElementById("contador").value = i
-
+            
+            // Cria uma div usando bootstrap para armazenar o input de tamanho do corte
             divTamanho = document.createElement('div')
             divTamanho.setAttribute("class", "col-md-6")
             divTamanho.setAttribute("id", "divTamanho".concat(i))
 
+            // Cria um input de tamanho de corte usando bootstrap e adicionando métodos necessários
             novoTamanho = document.createElement('input')
             novoTamanho.setAttribute("type", "number")
             novoTamanho.setAttribute("id", "tamanhoCorte".concat(i))
@@ -121,14 +135,17 @@
             novoTamanho.setAttribute("style", "margin-top: 10px")
             novoTamanho.setAttribute("onfocusout", "validaTamanho(this)")
 
+            // Acrescenta a div com o input de tamanho no formulário
             document.getElementById("formCorte").appendChild(document.createElement("br"));
             document.getElementById("formCorte").appendChild(divTamanho)
             document.getElementById("divTamanho".concat(i)).appendChild(novoTamanho)
 
+            // Cria uma div usando bootstrap para armazenar o input de quantidade do corte
             divQuantidade = document.createElement('div')
             divQuantidade.setAttribute("class", "col-md-6")
             divQuantidade.setAttribute("id", "divQuantidade".concat(i))
 
+            // Cria um input de quantidade de corte usando bootstrap e adicionando métodos necessários
             novaQuantidade = document.createElement('input')
             novaQuantidade.setAttribute("type", "number")
             novaQuantidade.setAttribute("id", "quantidadeCorte".concat(i))
@@ -137,6 +154,7 @@
             novaQuantidade.setAttribute("style", "margin-top: 10px")            
             novaQuantidade.setAttribute("onfocusout", "validaQuantidade(this)")            
             
+            // Acrescenta a div com o input de quantidade no formulário
             document.getElementById("formCorte").appendChild(divQuantidade)
             document.getElementById("divQuantidade".concat(i)).appendChild(novaQuantidade)
         }
