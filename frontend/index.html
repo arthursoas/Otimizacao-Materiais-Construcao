@@ -1,99 +1,107 @@
 <html>
 <head>
-<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-<title>HTML Solution Report</title>
+	<title>Corte ótimo</title>
+	<meta charset="utf-8">
+	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
-
-  $("#solution").click(function(){
-					
     $.getJSON('../backend/solution.json', function(result){
-  
-			$("div").empty();
-			$("div").append("Optional Solution = " + result.run.Optimal + "<br>");
-			var sol = result.run.Solution;
-	
-			var solPattTable = '';
-			solPattTable += '<table id="solPattTable" cellspacing=0 cellpadding=2 border=1>';
-			solPattTable += "<tr><th>Sr. No.</th>";
-			solPattTable += "<th>Cut Pattern</th>";
-			solPattTable += "<th>Quantity</th></tr>";
+			
+			if (result.run.Optimal > 1){
+				$("#Resultado").append("<p style='font-size: 20px; margin-top: 20px; margin-botton: 0'>Serão gastas " + result.run.Optimal + " unidades do material!</p>");
+			}
+			else{
+				$("#Resultado").append("<p style='font-size: 20px; margin-top: 20px; margin-botton: 0'>Será gasta " + result.run.Optimal + " unidade do material!</p>");
+			}
 
-			for(var i in sol) {
-				var decvar = sol[i]; 
+			var solucao = result.run.Solution;
+			$("#Resultado").append("<hr>")
+
+			if (solucao.length > 1){
+				$("#Resultado").append("<p style='font-size: 15px;'>Foram gerados " + solucao.length + " padrões de corte:</p>");
+			}
+			else{
+				$("#Resultado").append("<p style='font-size: 15px;'>Foi gerado " + solucao.length + " padrão de corte:</p>");
+			}
+			
+			var tabelaCortes = '';
+			tabelaCortes += '<table id="tabelaCortes" cellspacing=0 cellpadding=2 border=0 class="table table-striped table-bordered">';
+			tabelaCortes += "<tr><th style='width: 50px;'>#</th>";
+			tabelaCortes += "<th>Padrão de corte</th>";
+			tabelaCortes += "<th style='width: 190px;'>Número de utilizações</th></tr>";
+
+			for(var i in solucao) {
+				var decvar = solucao[i]; 
 				var pattern = decvar.pattern;
 				var cnt = decvar.count;
 
-				solPattTable += "<tr>";	
-				solPattTable += "<td>" + i + "</td>";	
-				solPattTable += "<td>";	
+				tabelaCortes += "<tr>";	
+				tabelaCortes += "<td>" + i + "</td>";	
+				tabelaCortes += "<td>";
+				tabelaCortes += "| ";
 				for(var j in pattern) {
-					solPattTable += pattern[j] + " | ";
+					tabelaCortes += pattern[j] + " cm | ";
 				}
-				solPattTable += "</td>";	
+				tabelaCortes += "</td>";	
 
-				solPattTable += "<td>";	
-				solPattTable += cnt;
-				solPattTable += "</td>";	
+				tabelaCortes += "<td>";	
+				tabelaCortes += cnt;
+				tabelaCortes += "</td>";	
 
-				solPattTable += "</tr>";	
+				tabelaCortes += "</tr>";	
 			}
 
-			solPattTable += "</table>" ;
-			$("div").append(solPattTable);
+			tabelaCortes += "</table>" ;
+			$("#Resultado").append(tabelaCortes);
 
-			var solWidth = result.run.SolutionWidth;
-			var solOWTable = '';
-			solOWTable += '<table id="solOWTable" cellspacing=0 cellpadding=2 border=1>';
-			solOWTable += "<tr><th>Width</th>";
-			solOWTable += "<th>Demand</th>";
-			solOWTable += "<th>Solution</th></tr>";
+			$("#Resultado").append("<p style='font-size: 15px;'>Atenção: A fim de minimizar a quantidade de padrões de corte utilizados, cortes a mais podem ter sido gerados.<br/>Confira na tabela abaixo a relação de cortes solicitados, e cortes gerados: </p>");
 
-			for(var i in solWidth) {
-				var decvar = solWidth[i]; 
+			var tamanhoSolucao = result.run.SolutionWidth;
+			var cortesGerados = '';
+			cortesGerados += '<table id="cortesGerados" cellspacing=0 cellpadding=2 style="max-width: 350px" class="table table-striped table-bordered">';
+			cortesGerados += "<tr><th style='width: 150px;'>Corte</th>";
+			cortesGerados += "<th style='width: 100px;'>Solicitado</th>";
+			cortesGerados += "<th style='width: 100px;'>Gerado</th></tr>";
+
+			for(var i in tamanhoSolucao) {
+				var decvar = tamanhoSolucao[i]; 
 				var width = decvar.width;
 				var demand = decvar.demand;
 				var solution = decvar.solution;
 
-				solOWTable += "<td>";	
-				solOWTable += width;
-				solOWTable += "</td>";	
-				solOWTable += "<td>";	
-				solOWTable += demand;
-				solOWTable += "</td>";	
-				solOWTable += "<td>";	
-				solOWTable += solution;
-				solOWTable += "</td>";	
-				solOWTable += "</tr>";	
+				cortesGerados += "<td>";	
+				cortesGerados += width + " cm";
+				cortesGerados += "</td>";	
+				cortesGerados += "<td>";	
+				cortesGerados += demand;
+				cortesGerados += "</td>";	
+				cortesGerados += "<td>";	
+				cortesGerados += solution;
+				cortesGerados += "</td>";	
+				cortesGerados += "</hr>";	
 			}
 
-			solOWTable += "</table>" ;
-			$("div").append(solOWTable);
+			cortesGerados += "</table>" ;
+			$("#Resultado").append(cortesGerados);
 
     });
   });
-});
 </script>
-
-<style>
-  article, aside, figure, footer, header, hgroup, 
-  menu, nav, section { display: block; }
-  body {
-    font-family: sans-serif;
-  }
-  p {
-    margin: 0px;
-  }
-</style>
 
 </head>
 
 <body>
-	Make sure that file 'solution.json' is in the same directory as index.html. <br>
-  <button id="solution">Solution</button>
-  <div></div>
+		<div class="container-fluid" style="background-color: #CFF09E">
+				<div class="container">
+						<h1>Corte ótimo</h1>
+						<h3 style="margin-bottom: 25px">Soluções ótimas para corte materiais de construção!</h3>
+				</div>
+		</div>
+		<div class="container" id="Resultado"></div>
 </body>
 
 </html>

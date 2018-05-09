@@ -1,11 +1,10 @@
 {
 	"run": {
-		"Optimal":4,
+		"Optimal":1,
 		"Solution":[
-			{"pattern":[300, 300, 300], "count":3},
-			{"pattern":[300], "count":1}
+			{"pattern":[300, 300], "count":1}
 		],
 		"SolutionWidth":[
-			{"width":300, "demand":10, "solution":10}		]
+			{"width":300, "demand":2, "solution":2}		]
 	}
 }
