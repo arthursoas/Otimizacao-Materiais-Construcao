@@ -1,21 +1,11 @@
 {
 	"run": {
-		"Optimal":14,
+		"Optimal":3,
 		"Solution":[
-			{"pattern":[472, 27, 27, 20, 20, 20], "count":1},
-			{"pattern":[215, 215, 150, 20], "count":3},
-			{"pattern":[215, 200, 150, 20], "count":1},
-			{"pattern":[200, 200, 200], "count":6},
-			{"pattern":[200, 200, 150, 20, 20], "count":1},
-			{"pattern":[150, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20], "count":1},
-			{"pattern":[20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20], "count":1}
+			{"pattern":[40, 40, 10, 10], "count":3}
 		],
 		"SolutionWidth":[
-			{"width":472, "demand":1, "solution":1},
-			{"width":215, "demand":7, "solution":7},
-			{"width":200, "demand":21, "solution":21},
-			{"width":150, "demand":4, "solution":6},
-			{"width":27, "demand":2, "solution":2},
-			{"width":20, "demand":50, "solution":52}		]
+			{"width":40, "demand":6, "solution":6},
+			{"width":10, "demand":3, "solution":6}		]
 	}
 }

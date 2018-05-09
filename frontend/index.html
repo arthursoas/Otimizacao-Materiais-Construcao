@@ -21,16 +21,16 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <label for="tamanhoBarra">Tamanho do material (cm):</label>
-                        <input type="number" id="tamanhoBarra" name="tamanhoBarra" class="form-control" placeholder="Obrigatório" required/>
+                        <input type="number" id="tamanhoBarra" name="tamanhoBarra" class="form-control" placeholder="Obrigatório" onfocusout="validaTamanhoBarra(this)"/>
                     </div>
                     <div class="col-md-12" style="margin-top: 30px; padding: 0">
                         <div class="col-md-6">
                             <label for="tamanhoCorte0">Tamanho do corte (cm):</label>
-                            <input type="number" id="tamanhoCorte0" name="tamanhoCorte0" class="form-control" placeholder="Obrigatório" required/>
+                            <input type="number" id="tamanhoCorte0" name="tamanhoCorte0" class="form-control" placeholder="Obrigatório" onfocusout="validaTamanho(this)"/>
                         </div>
                         <div class="col-md-6">
                             <label for="quantidadeCorte0">Quantidade necessária:</label>
-                            <input type="number" id="quantidadeCorte0" name="quantidadeCorte0" class="form-control" placeholder="Obrigatório" required/>
+                            <input type="number" id="quantidadeCorte0" name="quantidadeCorte0" class="form-control" placeholder="Obrigatório" onfocusout="validaQuantidade(this)"/>
                         </div>
                     </div>
                 </div>
@@ -49,10 +49,61 @@
                 alert("Preencha os campos obritatórios")
             }
             else{
-                document.getElementById("formCorte").submit() 
+                if(validaPreenchmento()){
+                    document.getElementById("formCorte").submit() 
+                }
             }
         }
 
+        function validaTamanho(elemento){
+            if(parseInt(elemento.value) > parseInt(document.getElementById("tamanhoBarra").value)){
+                alert("O tamanho do corte não pode ser maior que o material");
+                elemento.value = ""
+            }
+            else{
+                if(parseInt(elemento.value) <= 0){
+                    alert("O tamanho do corte não pode ser menor ou igual a 0");
+                    elemento.value = ""
+                }
+            }
+        }
+
+        function validaQuantidade(elemento){
+            if(parseInt(elemento.value) <= 0){
+                alert("A quantidade não pode ser menor ou igual a 0");
+                elemento.value = ""
+            }
+        }
+
+        function validaTamanhoBarra(elemento){
+            for(var i = 0; i <= document.getElementById("contador").value; i++){
+                if(parseInt(elemento.value) < parseInt(document.getElementById("tamanhoCorte".concat(i)).value)){
+                    alert("O material precisa ser maior que todos os cortes");
+                    elemento.value = ""
+                }
+            }
+            
+            if(parseInt(elemento.value) <= 0){
+                alert("A quantidade não pode ser menor ou igual a 0");
+                elemento.value = ""
+            }
+        }
+
+        function validaPreenchmento(){
+            for(var i = 0; i <= document.getElementById("contador").value; i++){
+                if(document.getElementById("quantidadeCorte".concat(i)).value == "" && document.getElementById("tamanhoCorte".concat(i)).value != ""){
+                    alert("Todos os cortes precisam de uma quantidade");
+                    return false
+                }else{
+                    if(document.getElementById("quantidadeCorte".concat(i)).value != "" && document.getElementById("tamanhoCorte".concat(i)).value == ""){
+                    alert("Todos os cortes precisam de um tamanho");
+                    return false
+                    }
+                }
+            }
+            return true
+        }
+        
         function adicionarLinha(){
             var i = parseInt(document.getElementById("contador").value)
             var i = i + 1
@@ -68,6 +119,7 @@
             novoTamanho.setAttribute("name", "tamanhoCorte".concat(i))
             novoTamanho.setAttribute("class", "form-control")
             novoTamanho.setAttribute("style", "margin-top: 10px")
+            novoTamanho.setAttribute("onfocusout", "validaTamanho(this)")
 
             document.getElementById("formCorte").appendChild(document.createElement("br"));
             document.getElementById("formCorte").appendChild(divTamanho)
@@ -83,6 +135,7 @@
             novaQuantidade.setAttribute("name", "quantidadeCorte".concat(i))
             novaQuantidade.setAttribute("class", "form-control")
             novaQuantidade.setAttribute("style", "margin-top: 10px")            
+            novaQuantidade.setAttribute("onfocusout", "validaQuantidade(this)")            
             
             document.getElementById("formCorte").appendChild(divQuantidade)
             document.getElementById("divQuantidade".concat(i)).appendChild(novaQuantidade)

@@ -1,9 +1,4 @@
 
 [1] Solving BB Node
 
-Obj Func Value = 13.4773
-Obj Func Value = 13.4773
-Obj Func Value = 13.0833
-Obj Func Value = 13.075
-Obj Func Value = 13.075
-Obj Func Value = 13.0528
+Obj Func Value = 3
