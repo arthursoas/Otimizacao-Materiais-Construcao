@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Corte ótimo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid" style="background-color: #CFF09E">
+            <div class="container">
+                <h1>Corte ótimo</h1>
+                <h3 style="margin-bottom: 25px">Soluções ótimas para corte materiais de construção!</h3>
+            </div>
+        </div>
+        <div class="container">
+            <form id="formCorte" action="calculaOtimo.php" method="post">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="tamanhoBarra">Tamanho do material (cm):</label>
+                        <input type="number" id="tamanhoBarra" name="tamanhoBarra" class="form-control" placeholder="Obrigatório" required/>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 30px; padding: 0">
+                        <div class="col-md-6">
+                            <label for="tamanhoCorte0">Tamanho do corte (cm):</label>
+                            <input type="number" id="tamanhoCorte0" name="tamanhoCorte0" class="form-control" placeholder="Obrigatório" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="quantidadeCorte0">Quantidade necessária:</label>
+                            <input type="number" id="quantidadeCorte0" name="quantidadeCorte0" class="form-control" placeholder="Obrigatório" required/>
+                        </div>
+                    </div>
+                </div>
+                    <input id="contador" name="contador" value="0" hidden></input>
+            </form>
+        <div class="col-md-12" style="margin-top: 10px; padding: 0">
+            <button type="button" class="btn btn-info" style="margin-left: 15px" onclick="adicionarLinha()">+ Novo corte</button>
+            <br/>
+            <button type="button" class="btn btn-success" style="margin-top: 30px" onclick="salvarValores()">Calcular ótimo</button>
+        </div>
+    </div>
+    
+        <script>
+        function salvarValores(){
+            if (document.getElementById("tamanhoBarra").value == "" || document.getElementById("tamanhoCorte0").value == "" || document.getElementById("quantidadeCorte0").value == ""){
+                alert("Preencha os campos obritatórios")
+            }
+            else{
+                document.getElementById("formCorte").submit() 
+            }
+        }
+
+        function adicionarLinha(){
+            var i = parseInt(document.getElementById("contador").value)
+            var i = i + 1
+            document.getElementById("contador").value = i
+
+            divTamanho = document.createElement('div')
+            divTamanho.setAttribute("class", "col-md-6")
+            divTamanho.setAttribute("id", "divTamanho".concat(i))
+
+            novoTamanho = document.createElement('input')
+            novoTamanho.setAttribute("type", "number")
+            novoTamanho.setAttribute("id", "tamanhoCorte".concat(i))
+            novoTamanho.setAttribute("name", "tamanhoCorte".concat(i))
+            novoTamanho.setAttribute("class", "form-control")
+            novoTamanho.setAttribute("style", "margin-top: 10px")
+
+            document.getElementById("formCorte").appendChild(document.createElement("br"));
+            document.getElementById("formCorte").appendChild(divTamanho)
+            document.getElementById("divTamanho".concat(i)).appendChild(novoTamanho)
+
+            divQuantidade = document.createElement('div')
+            divQuantidade.setAttribute("class", "col-md-6")
+            divQuantidade.setAttribute("id", "divQuantidade".concat(i))
+
+            novaQuantidade = document.createElement('input')
+            novaQuantidade.setAttribute("type", "number")
+            novaQuantidade.setAttribute("id", "quantidadeCorte".concat(i))
+            novaQuantidade.setAttribute("name", "quantidadeCorte".concat(i))
+            novaQuantidade.setAttribute("class", "form-control")
+            novaQuantidade.setAttribute("style", "margin-top: 10px")            
+            
+            document.getElementById("formCorte").appendChild(divQuantidade)
+            document.getElementById("divQuantidade".concat(i)).appendChild(novaQuantidade)
+        }
+        </script>
+    </body>
+</html>
