@@ -42,7 +42,7 @@
 
         gravarDados($arquivo, $tamanhoBarra, $demandas);
 
-        shell_exec("./cspsol --data dadosCliente.txt");
+        echo shell_exec("./cspsol --data dadosCliente.txt");
 
         echo "<script>console.log('Otimização calculada');</script>";
         echo "<script>window.location.replace('../frontend/resultado.html');</script>";

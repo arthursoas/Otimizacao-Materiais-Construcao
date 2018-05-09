@@ -4,8 +4,9 @@ Minimize
  obj: + x_1 + x_2 + x_3
 
 Subject To
- Width1: + 3 x_3 + 5 x_2 + 2 x_1 >= 30
- Width2: + x_1 >= 12
+ Width1: + x_3 + x_1 >= 3
+ Width2: + 2 x_2 >= 10
+ Width3: + 5 x_3 + x_1 >= 1
 
 Generals
  x_1

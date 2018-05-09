@@ -1,12 +1,13 @@
 {
 	"run": {
-		"Optimal":14,
+		"Optimal":8,
 		"Solution":[
-			{"pattern":[300, 100, 100], "count":13},
-			{"pattern":[100, 100, 100, 100, 100], "count":1}
+			{"pattern":[900, 20], "count":3},
+			{"pattern":[500, 500], "count":5}
 		],
 		"SolutionWidth":[
-			{"width":300, "demand":12, "solution":13},
-			{"width":100, "demand":30, "solution":31}		]
+			{"width":900, "demand":3, "solution":3},
+			{"width":500, "demand":10, "solution":10},
+			{"width":20, "demand":1, "solution":3}		]
 	}
 }
