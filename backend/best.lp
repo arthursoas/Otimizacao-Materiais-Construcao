@@ -1,19 +1,20 @@
 \* Problem: MasterCutStock *\
 
 Minimize
- obj: + x_1 + x_2 + x_3 + x_4 + x_5
+ obj: + x_1 + x_2 + x_3
 
 Subject To
- Width1: + 5 x_5 + 3 x_4 + x_3 + x_1 >= 10
- Width2: + x_4 + 2 x_3 + x_2 >= 20
- Width3: + x_2 >= 30
- Width4: + x_1 >= 40
+ Width1: + 3 x_3 + 5 x_2 + 2 x_1 >= 30
+ Width2: + x_1 >= 12
+
+Bounds
+ 13 <= x_1 <= 100000
+ x_2 = 1
+ x_3 = 0
 
 Generals
  x_1
  x_2
  x_3
- x_4
- x_5
 
 End

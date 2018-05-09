@@ -1,5 +1,39 @@
 
 [1] Solving BB Node
 
-Obj Func Value = 1
-Obj Func Value = 0.666667
+Obj Func Value = 13.2
+Branching on pattern variable, col index = 2
+
+[2] Solving BB Node
+
+Obj Func Value = 13.3333
+Branching on pattern variable, col index = 3
+
+[4] Solving BB Node
+
+Obj Func Value = 13.5
+Branching on pattern variable, col index = 1
+
+[8] Solving BB Node
+
+
+[9] Solving BB Node
+
+Obj Func Value = 13.8
+Branching on pattern variable, col index = 2
+
+[18] Solving BB Node
+
+Obj Func Value = 15
+
+[19] Solving BB Node
+
+Obj Func Value = 14
+
+[5] Solving BB Node
+
+Obj Func Value = 13.6
+
+[3] Solving BB Node
+
+Obj Func Value = 14
