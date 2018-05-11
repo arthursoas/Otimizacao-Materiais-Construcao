@@ -1,0 +1,5 @@
+Compile a biblioteca CSPSOL na pasta ../cspsol/src e copie o arquivo cspsol que será gerado para dentro desta pasta.
+A instruções de compilação do CSPSOL estão no arquivo ../cspsol/INSTALL.
+
+Ao tentar executar esse código, fique atento a permissões de escrita e criação de arquivos. O código em php deve ter permissão para ler e alterar o arquivo dadosCliente.txt.
+O cspsol deve ter permissão para ler e alterar o arquivo JSON.
