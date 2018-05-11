@@ -1,4 +1,0 @@
-
-[1] Solving BB Node
-
-Obj Func Value = 3
